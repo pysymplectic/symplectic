@@ -48,7 +48,7 @@
             <h2 class="blog-post-title" tal:content="post.title">Sample blog post</h2>
             <p class="blog-post-meta"><span tal:content="post.date">January 1, 2014</span> by <span tal:content="post.author">Mark</span></p>
 
-            <div tal:content="post.preview">
+            <div tal:content="structure:post.preview">
             <p>This blog post shows a few different types of content that's supported and styled with Bootstrap. Basic typography, images, and code are all supported.</p>
             </div>
           </div><!-- /.blog-post -->
