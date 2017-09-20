@@ -1,11 +1,16 @@
+import os
+import shutil
+
 import chameleon
 
-with open("river.html") as fp:
-    river = fp.read()
+def process(template_file, inputs):
+    with open(template_file) as fp:
+        template_str = fp.read()
+    template = chameleon.PageTemplate(template_str)
+    with open(os.path.join('build', template_file), 'w') as fp:
+        fp.write(template(**inputs))
 
-template = chameleon.PageTemplate(river)
-
-derived = dict(
+river_inputs = dict(
     title="Local Patches of an Orbifold Life",
     description="Some small, random musing about life in an interesting place.",
     posts=[
@@ -17,5 +22,9 @@ derived = dict(
     ],
 )
 
-with open("build/river.html", 'w') as fp:
-    fp.write(template(**derived))
+process('river.html', river_inputs)
+
+for asset in ['css', 'js']:
+    if os.path.exists(os.path.join('build', asset)):
+        shutil.rmtree(os.path.join('build', asset))
+    shutil.copytree(asset, os.path.join('build', asset))
