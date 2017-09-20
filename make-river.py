@@ -34,6 +34,7 @@ post_inputs = dict(
 
 process('river.html', river_inputs)
 process('post.html', post_inputs)
+process('list.html', river_inputs)
 
 for asset in ['css', 'js']:
     if os.path.exists(os.path.join('build', asset)):
