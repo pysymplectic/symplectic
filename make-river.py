@@ -22,7 +22,18 @@ river_inputs = dict(
     ],
 )
 
+post_inputs = dict(
+    title="Local Patches of an Orbifold Life",
+    description="Some small, random musing about life in an interesting place.",
+    post=dict(title="On the weather",
+             date="September 13th, 2017",
+             author="Moshe Zadka",
+             contents="<div>blah blah</div><div>blah blah blah</div>",
+             ),
+)
+
 process('river.html', river_inputs)
+process('post.html', post_inputs)
 
 for asset in ['css', 'js']:
     if os.path.exists(os.path.join('build', asset)):
