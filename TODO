@@ -1,0 +1,5 @@
+* Refactor into a Python package
+* Kill the "preview" stuff for now
+* Support reading a directory of JSONs
+* Figure a sensible time thing
+* Get to the point where "python -m symplectic" is a half-way useful generator
