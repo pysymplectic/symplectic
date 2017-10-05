@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title><span tal:replace="title">Blog Template for Bootstrap</span> - <span tal:replace="post.title">Some post</span></title>
+    <title><span tal:replace="metadata.title">Blog Template for Bootstrap</span> - <span tal:replace="post.title">Some post</span></title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -35,8 +35,8 @@
 
     <div class="blog-header">
       <div class="container">
-        <h1 class="blog-title" tal:content="title">The Bootstrap Blog</h1>
-        <p class="lead blog-description" tal:content="description">An example blog template built with Bootstrap.</p>
+        <h1 class="blog-title" tal:content="metadata.title">The Bootstrap Blog</h1>
+        <p class="lead blog-description" tal:content="metadata.description">An example blog template built with Bootstrap.</p>
       </div>
     </div>
 
