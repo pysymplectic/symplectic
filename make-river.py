@@ -20,7 +20,6 @@ class Post(object):
     date = attr.ib()
     author = attr.ib()
     contents = attr.ib()
-    preview = attr.ib()
 
     @property
     def rel_link(self):
@@ -61,7 +60,6 @@ local_orbifold = Blog(
             slug='weather',
             date="September 13th, 2017",
             author="Moshe Zadka",
-            preview="<div>blah blah</div>",
             contents="<div>blah blah</div><div>blah blah blah</div>",
         ),
         Post(
@@ -69,7 +67,6 @@ local_orbifold = Blog(
             slug='climate',
             date="September 14th, 2017",
             author="Moshe Zadka",
-            preview="<div>bloh bloh</div>",
             contents="<div>bloh bloh</div><div>bloh bloh bloh</div>",
         ),
     ],
