@@ -25,4 +25,4 @@ local_orbifold = render.Blog(
     ],
 )
 
-render.render(local_orbifold, sys.argv[1])
+render.render(local_orbifold, sys.argv[1], sys.argv[2])

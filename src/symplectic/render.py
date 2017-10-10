@@ -35,19 +35,21 @@ class Blog(object):
     metadata = attr.ib()
     posts = attr.ib()
 
-def render(blog, theme):
+def render(blog, theme, output):
+    if not os.path.exists(output):
+        os.makedirs(output)
     process(os.path.join(theme, 'river.html'),
             dict(metadata=blog.metadata, posts=blog.posts),
-           'build/river.html')
+            os.path.join(output, 'river.html'))
     process(os.path.join(theme, 'list.html'),
             dict(metadata=blog.metadata, posts=blog.posts),
-            'build/list.html')
+            os.path.join(output, 'list.html'))
     for i, post in enumerate(blog.posts):
         process(os.path.join(theme, 'post.html'),
                 dict(metadata=blog.metadata, post=post),
-                'build/{}.html'.format(post.slug))
+                os.path.join(output, '{}.html'.format(post.slug)))
     for asset in ['css', 'js']:
-        if os.path.exists(os.path.join('build', asset)):
-            shutil.rmtree(os.path.join('build', asset))
+        if os.path.exists(os.path.join(output, asset)):
+            shutil.rmtree(os.path.join(output, asset))
         shutil.copytree(os.path.join(theme, asset),
-                        os.path.join('build', asset))
+                        os.path.join(output, asset))
