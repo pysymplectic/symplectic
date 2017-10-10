@@ -1,6 +1,6 @@
+import sys
+
 from symplectic import render
-import os
-import shutil
 
 local_orbifold = render.Blog(
     metadata=render.Metadata(
@@ -25,4 +25,4 @@ local_orbifold = render.Blog(
     ],
 )
 
-render.render(local_orbifold)
+render.render(local_orbifold, sys.argv[1])
