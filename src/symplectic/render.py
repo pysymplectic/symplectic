@@ -47,29 +47,3 @@ def render(blog):
         if os.path.exists(os.path.join('build', asset)):
             shutil.rmtree(os.path.join('build', asset))
         shutil.copytree(asset, os.path.join('build', asset))
-
-
-local_orbifold = Blog(
-    metadata=Metadata(
-         title="Local Patches of an Orbifold Life",
-         description="Some small, random musing about life in an interesting place.",
-    ),
-    posts=[
-        Post(
-            title="On the weather",
-            slug='weather',
-            date="September 13th, 2017",
-            author="Moshe Zadka",
-            contents="<div>blah blah</div><div>blah blah blah</div>",
-        ),
-        Post(
-            title="On the climate",
-            slug='climate',
-            date="September 14th, 2017",
-            author="Moshe Zadka",
-            contents="<div>bloh bloh</div><div>bloh bloh bloh</div>",
-        ),
-    ],
-)
-
-render(local_orbifold)
