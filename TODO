@@ -1,3 +1,2 @@
-* Support reading a directory of JSONs
-* Figure a sensible time thing
-* Get to the point where "python -m symplectic" is a half-way useful generator
+* Figure a sensible time thing (sort by time, etc.)
+* Generate proper links to older/newer, archives
