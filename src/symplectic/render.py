@@ -3,7 +3,7 @@ import shutil
 
 import chameleon
 
-def process(template_file, inputs, output_file):
+def _process(template_file, inputs, output_file):
     with open(template_file) as fp:
         template_str = fp.read()
     template = chameleon.PageTemplate(template_str)
@@ -14,15 +14,15 @@ def process(template_file, inputs, output_file):
 def render(blog, theme, output):
     if not os.path.exists(output):
         os.makedirs(output)
-    process(os.path.join(theme, 'river.html'),
-            dict(metadata=blog.metadata, posts=blog.posts),
-            os.path.join(output, 'river.html'))
-    process(os.path.join(theme, 'list.html'),
-            dict(metadata=blog.metadata, posts=blog.posts),
-            os.path.join(output, 'list.html'))
+    _process(os.path.join(theme, 'river.html'),
+             dict(metadata=blog.metadata, posts=blog.posts),
+             os.path.join(output, 'river.html'))
+    _process(os.path.join(theme, 'list.html'),
+             dict(metadata=blog.metadata, posts=blog.posts),
+             os.path.join(output, 'list.html'))
     for i, post in enumerate(blog.posts):
-        process(os.path.join(theme, 'post.html'),
-                dict(metadata=blog.metadata, post=post),
+        _process(os.path.join(theme, 'post.html'),
+                 dict(metadata=blog.metadata, post=post),
                 os.path.join(output, '{}.html'.format(post.slug)))
     for asset in ['css', 'js']:
         if os.path.exists(os.path.join(output, asset)):
