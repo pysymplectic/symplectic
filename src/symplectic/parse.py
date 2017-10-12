@@ -3,7 +3,7 @@ import io
 import json
 import os
 
-from symplectic import render
+from symplectic import posts
 
 def load(fname):
     with io.open(fname, "r", encoding='utf-8') as fp:
@@ -11,10 +11,10 @@ def load(fname):
 
 def parse(place):
     metadata = load(os.path.join(place, 'metadata.json'))
-    posts = []
+    all_posts = []
     for fname in glob.glob(os.path.join(place, '*.json')):
         if fname.endswith('metadata.json'):
             continue
-        posts.append(load(fname))
-    return render.Blog(metadata=render.Metadata(**metadata),
-                       posts=[render.Post(**post) for post in posts])
+        all_posts.append(load(fname))
+    return posts.Blog(metadata=posts.Metadata(**metadata),
+                      posts=[posts.Post(**post) for post in all_posts])

@@ -1,8 +1,6 @@
 import os
 import shutil
 
-import attr
-
 import chameleon
 
 def process(template_file, inputs, output_file):
@@ -12,28 +10,6 @@ def process(template_file, inputs, output_file):
     rendered = template(**inputs)
     with open(output_file, 'w') as fp:
         fp.write(rendered)
-
-@attr.s(frozen=True)
-class Post(object):
-    title = attr.ib()
-    slug = attr.ib()
-    date = attr.ib()
-    author = attr.ib()
-    contents = attr.ib()
-
-    @property
-    def rel_link(self):
-        return self.slug + '.html'
-
-@attr.s(frozen=True)
-class Metadata(object):
-    title = attr.ib()
-    description = attr.ib()
-
-@attr.s(frozen=True)
-class Blog(object):
-    metadata = attr.ib()
-    posts = attr.ib()
 
 def render(blog, theme, output):
     if not os.path.exists(output):
