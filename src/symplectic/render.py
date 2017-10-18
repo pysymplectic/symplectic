@@ -19,7 +19,8 @@ def render(blog, theme, output):
                   archives=[dict(name='All', link='list.html')]),
              os.path.join(output, 'river.html'))
     _process(os.path.join(theme, 'list.html'),
-             dict(metadata=blog.metadata, posts=blog.posts),
+             dict(metadata=blog.metadata, posts=blog.posts,
+                  archives=[dict(name='All', link='list.html')]),
              os.path.join(output, 'list.html'))
     for i, post in enumerate(blog.posts):
         _process(os.path.join(theme, 'post.html'),

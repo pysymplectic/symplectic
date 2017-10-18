@@ -23,6 +23,7 @@ class Post(object):
 class Metadata(object):
     title = attr.ib()
     description = attr.ib()
+    links = attr.ib(default=attr.Factory(list))
 
 @attr.s(frozen=True)
 class Blog(object):
