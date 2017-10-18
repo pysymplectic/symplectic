@@ -45,7 +45,7 @@
       <div class="row">
         <div class="col-sm-8 blog-main">
         <ul tal:repeat="post posts">
-          <li><span tal:content="post.date">January 1, 2014</span>: <span tal:content="post.title">Sample blog post</span></li>
+          <li><span tal:content="post.formatted_date">January 1, 2014</span>: <a tal:content="post.title" tal:attributes="href post.rel_link" href="#" >Sample blog post</a></li>
         </ul>
 
           <nav class="blog-pagination">

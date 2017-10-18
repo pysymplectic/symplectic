@@ -1,3 +1,5 @@
+import datetime
+
 import attr
 
 @attr.s(frozen=True)
@@ -7,6 +9,11 @@ class Post(object):
     date = attr.ib()
     author = attr.ib()
     contents = attr.ib()
+
+    @property
+    def formatted_date(self):
+        when = datetime.datetime.strptime(self.date, "%Y-%m-%d %H:%M")
+        return when.strftime('%c')
 
     @property
     def rel_link(self):
