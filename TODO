@@ -1,2 +1,3 @@
 * Generate proper links to older/newer
 * Refactor example template to DRY with METAL
+* Support for pages
