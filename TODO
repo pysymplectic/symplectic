@@ -1,1 +1,2 @@
-* Generate proper links to older/newer, archives
+* Generate proper links to older/newer
+* Refactor example template to DRY with METAL
