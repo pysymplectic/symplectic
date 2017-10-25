@@ -22,7 +22,8 @@ def render(blog, theme, output):
              os.path.join(output, 'list.html'))
     for i, post in enumerate(blog.posts):
         _process(loader['post.html'],
-                 dict(metadata=blog.metadata, post=post),
+                 dict(metadata=blog.metadata, post=post,
+                      archives=[dict(name='All', link='list.html')]),
                  os.path.join(output, '{}.html'.format(post.slug)))
     for asset in ['css', 'js']:
         if os.path.exists(os.path.join(output, asset)):
