@@ -1,3 +1,4 @@
+import functools
 import os
 import shutil
 
@@ -8,23 +9,32 @@ def _process(template, inputs, output_file):
     with open(output_file, 'w') as fp:
         fp.write(rendered)
 
+def _dict_sum(d1, **d2):
+    ret = d1.copy()
+    ret.update(d2)
+    return ret
+
 def render(blog, theme, output):
     if not os.path.exists(output):
         os.makedirs(output)
     loader = chameleon.PageTemplateLoader(theme)
+    base_dict = dict(metadata=blog.metadata, pages=blog.pages,
+                     archives=[dict(name='All', link='list.html')])
+    regular_and = functools.partial(_dict_sum, base_dict)
     _process(loader['river.html'],
-             dict(metadata=blog.metadata, posts=blog.posts,
-                  archives=[dict(name='All', link='list.html')]),
+             regular_and(posts=blog.posts),
              os.path.join(output, 'river.html'))
     _process(loader['list.html'],
-             dict(metadata=blog.metadata, posts=blog.posts,
-                  archives=[dict(name='All', link='list.html')]),
+             regular_and(posts=blog.posts),
              os.path.join(output, 'list.html'))
-    for i, post in enumerate(blog.posts):
+    for post in blog.posts:
         _process(loader['post.html'],
-                 dict(metadata=blog.metadata, post=post,
-                      archives=[dict(name='All', link='list.html')]),
+                 regular_and(post=post),
                  os.path.join(output, '{}.html'.format(post.slug)))
+    for page in blog.pages:
+        _process(loader['post.html'],
+                 regular_and(post=page),
+                 os.path.join(output, '{}.html'.format(page.slug)))
     for asset in ['css', 'js']:
         if os.path.exists(os.path.join(output, asset)):
             shutil.rmtree(os.path.join(output, asset))

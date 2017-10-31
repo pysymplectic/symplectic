@@ -1,3 +1,4 @@
+import functools
 import glob
 import io
 import json
@@ -9,8 +10,8 @@ def _load(fname):
     with io.open(fname, "r", encoding='utf-8') as fp:
         return json.loads(fp.read())
 
-def posts_from_json_files(fnames):
-    all_posts = []
-    for fname in fnames:
-        all_posts.append(posts.Post(**_load(fname)))
-    return all_posts
+def _load_with_klass(klass, names):
+    return [klass(**_load(name)) for name in names]
+
+posts_from_json_files = functools.partial(_load_with_klass, posts.Post)
+pages_from_json_files = functools.partial(_load_with_klass, posts.Page)

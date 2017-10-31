@@ -20,6 +20,19 @@ class Post(object):
         return self.slug + '.html'
 
 @attr.s(frozen=True)
+class Page(object):
+    title = attr.ib()
+    slug = attr.ib()
+    author = attr.ib()
+    contents = attr.ib()
+
+    formatted_date = ""
+
+    @property
+    def rel_link(self):
+        return self.slug + '.html'
+
+@attr.s(frozen=True)
 class Metadata(object):
     title = attr.ib()
     description = attr.ib()
@@ -29,3 +42,4 @@ class Metadata(object):
 class Blog(object):
     metadata = attr.ib()
     posts = attr.ib()
+    pages = attr.ib()

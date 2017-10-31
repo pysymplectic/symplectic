@@ -25,11 +25,7 @@
     <div class="blog-masthead">
       <div class="container">
         <nav class="nav">
-          <a class="nav-link active" href="#">Home</a>
-          <a class="nav-link" href="#">New features</a>
-          <a class="nav-link" href="#">Press</a>
-          <a class="nav-link" href="#">New hires</a>
-          <a class="nav-link" href="#">About</a>
+          <a class="nav-link" tal:repeat="page pages" href="#" tal:attributes="href page.rel_link" tal.content="page.title">About</a>
         </nav>
       </div>
     </div>
