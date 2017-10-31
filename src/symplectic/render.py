@@ -19,6 +19,7 @@ def render(blog, theme, output):
         os.makedirs(output)
     loader = chameleon.PageTemplateLoader(theme)
     base_dict = dict(metadata=blog.metadata, pages=blog.pages,
+                     pagination=None,
                      archives=[dict(name='All', link='list.html')])
     regular_and = functools.partial(_dict_sum, base_dict)
     _process(loader['river.html'],

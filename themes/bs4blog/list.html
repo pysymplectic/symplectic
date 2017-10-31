@@ -13,10 +13,6 @@
         <ul tal:repeat="post posts">
           <li><span tal:content="post.formatted_date">January 1, 2014</span>: <a tal:content="post.title" tal:attributes="href post.rel_link" href="#" >Sample blog post</a></li>
         </ul>
-          <nav class="blog-pagination">
-            <a class="btn btn-outline-primary" href="#">Older</a>
-            <a class="btn btn-outline-secondary disabled" href="#">Newer</a>
-          </nav>
      </div><!-- /slot=main -->
   </body>
 </html>

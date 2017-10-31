@@ -44,6 +44,10 @@
           <div metal:define-slot="main">
              This is where the main content goes.
           </div>
+          <nav tal:condition="pagination" class="blog-pagination">
+            <a class="btn btn-outline-primary" href="#">Older</a>
+            <a class="btn btn-outline-secondary disabled" href="#">Newer</a>
+          </nav>
 
         </div><!-- /.blog-main -->
 
