@@ -18,10 +18,9 @@ def parse_docinfo(docinfo):
         ret[field] = value
     return ret
 
-def pages_from_rest_files(fnames):
+def _parse_rest_files(fnames):
     overrides = {'input_encoding': 'utf-8',
                  'initial_header_level': 2}
-    ret = []
     for fname in fnames:
         with io.open(fname, "r", encoding='utf-8') as fp:
             input_string = fp.read()
@@ -29,10 +28,27 @@ def pages_from_rest_files(fnames):
             source=input_string, source_path=fname,
             writer_name='html', settings_overrides=overrides)
         docinfo = parse_docinfo(parts['docinfo'])
+        yield parts, docinfo
+
+def pages_from_rest_files(fnames):
+    ret = []
+    for parts, docinfo in _parse_rest_files(fnames):
         page = posts.Page(title=parts['title'],
                           contents=parts['body'],
                           slug=docinfo['slug'],
                           author=docinfo['author'],
+                         )
+        ret.append(page)
+    return ret
+
+def posts_from_rest_files(fnames):
+    ret = []
+    for parts, docinfo in _parse_rest_files(fnames):
+        page = posts.Post(title=parts['title'],
+                          contents=parts['body'],
+                          slug=docinfo['slug'],
+                          author=docinfo['author'],
+                          date=docinfo['date'],
                          )
         ret.append(page)
     return ret
