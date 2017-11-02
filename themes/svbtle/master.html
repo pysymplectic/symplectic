@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      define-macro="master">
+<head>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/pygments.css">
+	<link href='//fonts.googleapis.com/css?family=Open+Sans:800,400,300|Inconsolata' rel='stylesheet' type='text/css'>
+        <title tal:content="metadata.title">Blog Template for Svbtle</title>
+	<meta charset="utf-8" />
+</head>
+<body>
+	<section id="sidebar">
+		<figure id="user_logo">
+            <div class="logo">&nbsp;</div>
+		</figure>
+
+		<div class="user_meta">
+            <h1 id="user"><a href="#" class="" tal:content="metadata.title">Blog template</a></h1>
+			<h2 tal:content="metadata.description">A blog about nothing</h2>
+			<ul>
+                                <li tal:repeat="link metadata.links"><a href="#" tal:attributes="href link[1]" tal:content="link[0]">GitHub</a></li>
+                                <li tal:repeat="page pages"><a href="#" tal:attributes="href page.rel_link" tal:content="page.title">About me</a></li>
+			</ul>
+		</div>
+		<footer>
+			<address>
+				Powered by <a href="http://pelican.notmyidea.org/">Pelican</a>,
+		                theme by <a href="https://github.com/wting/pelican-svbtle">wting</a>.
+			</address>
+		</footer>
+	</section>
+
+	<section id="posts">
+          <div metal:define-slot="main">
+             This is where the main content goes.
+          </div>
+	</section>
+</body>
+</html>
