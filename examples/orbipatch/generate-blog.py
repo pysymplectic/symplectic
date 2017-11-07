@@ -1,4 +1,5 @@
 import glob
+import shutil
 
 import symplectic
 from symplectic import jsonformat, rest
@@ -20,3 +21,4 @@ symplectic.render(BLOG,
 #                  theme='../../themes/bs4blog',
                   theme=['../../themes/basic', '../../themes/bs4blog'],
                   output='../../build/blog')
+shutil.copy('../../build/blog/river.html', '../../build/blog/index.html')
