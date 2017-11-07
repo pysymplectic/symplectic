@@ -36,8 +36,12 @@ def render(blog, theme, output):
         _process(loader['post.html'],
                  regular_and(post=page),
                  os.path.join(output, '{}.html'.format(page.slug)))
+    if isinstance(theme, list):
+        dname = theme[-1]
+    else:
+        dname = theme
     for asset in ['css', 'js']:
         if os.path.exists(os.path.join(output, asset)):
             shutil.rmtree(os.path.join(output, asset))
-        shutil.copytree(os.path.join(theme, asset),
+        shutil.copytree(os.path.join(dname, asset),
                         os.path.join(output, asset))

@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
+    <link rel="icon" href="favicon.ico">
 
     <title tal:content="metadata.title">Blog Template for Bootstrap</title>
 
@@ -25,14 +25,14 @@
     <div class="blog-masthead">
       <div class="container">
         <nav class="nav">
-          <a class="nav-link" tal:repeat="page pages" href="#" tal:attributes="href page.rel_link" tal.content="page.title">About</a>
+          <a class="nav-link" tal:repeat="page pages" href="#" tal:attributes="href page.rel_link" tal:content="page.title">About</a>
         </nav>
       </div>
     </div>
 
     <div class="blog-header">
       <div class="container">
-        <h1 class="blog-title" tal:content="metadata.title">The Bootstrap Blog</h1>
+        <h1 class="blog-title"><a tal:content="metadata.title" href="index.html">The Bootstrap Blog</a></h1>
         <p class="lead blog-description" tal:content="metadata.description">An example blog template built with Bootstrap.</p>
       </div>
     </div>
