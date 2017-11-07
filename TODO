@@ -1,4 +1,3 @@
-* Figure out how to not duplicate the "infrastructure" templates
 * Package themes inside the package
 * Get to releasable state
 * Generate proper links to older/newer

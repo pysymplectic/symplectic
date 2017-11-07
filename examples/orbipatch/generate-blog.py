@@ -18,5 +18,5 @@ PAGES += rest.pages_from_rest_files(glob.glob('pages/*.rst'))
 BLOG = symplectic.Blog(metadata=METADATA, posts=POSTS, pages=PAGES)
 symplectic.render(BLOG,
 #                  theme='../../themes/bs4blog',
-                  theme='../../themes/svbtle',
+                  theme=['../../themes/basic', '../../themes/bs4blog'],
                   output='../../build/blog')
