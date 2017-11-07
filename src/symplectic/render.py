@@ -2,6 +2,8 @@ import functools
 import os
 import shutil
 
+import pkg_resources
+
 import chameleon
 
 def _process(template, inputs, output_file):
@@ -15,6 +17,7 @@ def _dict_sum(d1, **d2):
     return ret
 
 def render(blog, theme, output):
+    theme[0:0] = [pkg_resources.resource_filename('symplectic', 'basic')]
     if not os.path.exists(output):
         os.makedirs(output)
     loader = chameleon.PageTemplateLoader(theme)
@@ -36,10 +39,7 @@ def render(blog, theme, output):
         _process(loader['post.html'],
                  regular_and(post=page),
                  os.path.join(output, '{}.html'.format(page.slug)))
-    if isinstance(theme, list):
-        dname = theme[-1]
-    else:
-        dname = theme
+    dname = theme[-1]
     for asset in ['css', 'js']:
         if os.path.exists(os.path.join(output, asset)):
             shutil.rmtree(os.path.join(output, asset))
