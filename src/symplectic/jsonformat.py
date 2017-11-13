@@ -8,7 +8,8 @@ from symplectic import posts
 
 def _load(fname):
     with io.open(fname, "r", encoding='utf-8') as fp:
-        return json.loads(fp.read())
+        content = fp.read()
+        return json.loads(content)
 
 def _load_with_klass(klass, names):
     return [klass(**_load(name)) for name in names]
