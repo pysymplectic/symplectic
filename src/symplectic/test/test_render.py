@@ -6,8 +6,12 @@ import unittest
 
 from xml.etree import ElementTree as ET
 
+import attr
+
 import symplectic
 from symplectic import posts
+
+NS = '{http://www.w3.org/1999/xhtml}'
 
 class RenderTest(unittest.TestCase):
 
@@ -60,15 +64,57 @@ class RenderTest(unittest.TestCase):
     def test_empty_render(self):
         symplectic.render(self.blog,
                           theme=[self.themedir],
-                          output=self.blogdir)
-        with open(os.path.join(self.blogdir, 'river.html')) as fp:
+                          output=os.path.join(self.blogdir, 'blog'))
+        with open(os.path.join(self.blogdir, 'blog', 'river.html')) as fp:
             river = fp.read()
         river_parsed = ET.fromstring(river)
-        ns = '{http://www.w3.org/1999/xhtml}'
-        title, = river_parsed.iter(ns + 'title')
+        title, = river_parsed.iter(NS + 'title')
         self.assertEquals(title.text, self.blog.metadata.title)
-        archives, links = river_parsed.iter(ns + 'li')
-        links, = links.iter(ns + 'a')
+        archives, links = river_parsed.iter(NS + 'li')
+        links, = links.iter(NS + 'a')
         self.assertEquals(links.text, self.blog.metadata.links[0][0])
         self.assertEquals(links.attrib, dict(href=self.blog.metadata.links[0][1]))
-        raise ValueError(river_parsed)
+        with open(os.path.join(self.blogdir, 'blog', 'list.html')) as fp:
+            archives = fp.read()
+        archives_parsed = ET.fromstring(river)
+        title, = archives_parsed.iter(NS + 'title')
+        self.assertEquals(title.text, self.blog.metadata.title)
+
+    def test_one_post_render(self):
+        post = posts.Post(title='hey there', slug='foo', date='2017-11-13 22:23',
+                          author='', contents='')
+        blog = attr.evolve(self.blog, posts=[post])
+        symplectic.render(blog,
+                          theme=[self.themedir],
+                          output=os.path.join(self.blogdir))
+        with open(os.path.join(self.blogdir, 'foo.html')) as fp:
+            foo = fp.read()
+        foo_parsed = ET.fromstring(foo)
+        h2, = foo_parsed.iter(NS + 'h2')
+        self.assertEquals(h2.text, post.title)
+
+    def test_one_page_render(self):
+        page = posts.Page(title='hey there', slug='foo',
+                          author='', contents='')
+        blog = attr.evolve(self.blog, pages=[page])
+        symplectic.render(blog,
+                          theme=[self.themedir],
+                          output=os.path.join(self.blogdir))
+        with open(os.path.join(self.blogdir, 'foo.html')) as fp:
+            foo = fp.read()
+        foo_parsed = ET.fromstring(foo)
+        h2, = foo_parsed.iter(NS + 'h2')
+        self.assertEquals(h2.text, page.title)
+
+    def test_remove_css(self):
+        with open(os.path.join(self.themedir, 'css', 'foo.css'), 'w') as fp:
+            fp.write('haha')
+        os.mkdir(os.path.join(self.blogdir, 'css'))
+        with open(os.path.join(self.blogdir, 'css', 'foo.css'), 'w') as fp:
+            fp.write('hoho')
+        symplectic.render(self.blog,
+                          theme=[self.themedir],
+                          output=os.path.join(self.blogdir))
+        with open(os.path.join(self.blogdir, 'css', 'foo.css')) as fp:
+            foo = fp.read()
+        self.assertEquals(foo, 'haha')
