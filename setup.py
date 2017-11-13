@@ -15,4 +15,5 @@ setuptools.setup(
     packages=setuptools.find_packages(where='src'),
     package_dir={"": "src"},
     install_requires=['attrs', 'incremental', 'chameleon'],
+    include_package_data=True,
 )
