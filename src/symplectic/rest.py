@@ -5,11 +5,9 @@ from xml.etree import ElementTree as ET
 from docutils import core as ducore, io as duio
 from docutils.writers import html4css1
 
-from docutils.writers.html4css1 import HTMLTranslator, Writer
-
 from symplectic import posts
 
-def parse_docinfo(docinfo):
+def _parse_docinfo(docinfo):
     parsed = ET.fromstring(docinfo)
     ret = {}
     for elem in parsed.find('tbody').findall('tr'):
@@ -27,7 +25,7 @@ def _parse_rest_files(fnames):
         parts = ducore.publish_parts(
             source=input_string, source_path=fname,
             writer_name='html', settings_overrides=overrides)
-        docinfo = parse_docinfo(parts['docinfo'])
+        docinfo = _parse_docinfo(parts['docinfo'])
         yield parts, docinfo
 
 def pages_from_rest_files(fnames):
