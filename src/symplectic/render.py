@@ -8,6 +8,8 @@ import chameleon
 
 def _process(template, inputs, output_file):
     rendered = template(**inputs)
+    if rendered.count('<!DOCTYPE html>') > 1:
+        rendered = rendered.replace('<!DOCTYPE html>', '', 1)
     with open(output_file, 'w') as fp:
         fp.write(rendered)
 

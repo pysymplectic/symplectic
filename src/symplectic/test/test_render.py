@@ -4,6 +4,8 @@ import shutil
 import tempfile
 import unittest
 
+from xml.etree import ElementTree as ET
+
 import symplectic
 from symplectic import posts
 
@@ -59,4 +61,14 @@ class RenderTest(unittest.TestCase):
         symplectic.render(self.blog,
                           theme=[self.themedir],
                           output=self.blogdir)
-        raise ValueError(glob.glob(self.blogdir + '/*'))
+        with open(os.path.join(self.blogdir, 'river.html')) as fp:
+            river = fp.read()
+        river_parsed = ET.fromstring(river)
+        ns = '{http://www.w3.org/1999/xhtml}'
+        title, = river_parsed.iter(ns + 'title')
+        self.assertEquals(title.text, self.blog.metadata.title)
+        archives, links = river_parsed.iter(ns + 'li')
+        links, = links.iter(ns + 'a')
+        self.assertEquals(links.text, self.blog.metadata.links[0][0])
+        self.assertEquals(links.attrib, dict(href=self.blog.metadata.links[0][1]))
+        raise ValueError(river_parsed)
