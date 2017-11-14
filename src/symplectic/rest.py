@@ -10,6 +10,7 @@ from docutils import core as ducore
 
 from symplectic import posts
 
+
 def _parse_docinfo(docinfo):
     parsed = ET.fromstring(docinfo)
     ret = {}
@@ -18,6 +19,7 @@ def _parse_docinfo(docinfo):
         value = elem.find('td').text
         ret[field] = value
     return ret
+
 
 def _parse_rest_files(fnames):
     overrides = {'input_encoding': 'utf-8',
@@ -31,6 +33,7 @@ def _parse_rest_files(fnames):
         docinfo = _parse_docinfo(parts['docinfo'])
         yield parts, docinfo
 
+
 def pages_from_rest_files(fnames):
     """
     Read pages from ReST files
@@ -40,10 +43,10 @@ def pages_from_rest_files(fnames):
         page = posts.Page(title=parts['title'],
                           contents=parts['body'],
                           slug=docinfo['slug'],
-                          author=docinfo['author'],
-                         )
+                          author=docinfo['author'])
         ret.append(page)
     return ret
+
 
 def posts_from_rest_files(fnames):
     """
@@ -55,7 +58,6 @@ def posts_from_rest_files(fnames):
                           contents=parts['body'],
                           slug=docinfo['slug'],
                           author=docinfo['author'],
-                          date=docinfo['date'],
-                         )
+                          date=docinfo['date'])
         ret.append(page)
     return ret

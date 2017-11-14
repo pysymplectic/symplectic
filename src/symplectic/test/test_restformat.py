@@ -3,6 +3,7 @@ import unittest
 
 from symplectic import rest
 
+
 class JSONFormatTest(unittest.TestCase):
 
     def test_parse_post(self):

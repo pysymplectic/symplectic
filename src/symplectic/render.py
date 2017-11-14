@@ -10,6 +10,7 @@ import pkg_resources
 
 import chameleon
 
+
 def _process(template, inputs, output_file):
     rendered = template(**inputs)
     if rendered.count('<!DOCTYPE html>') > 1:
@@ -17,10 +18,12 @@ def _process(template, inputs, output_file):
     with open(output_file, 'w') as filep:
         filep.write(rendered)
 
+
 def _dict_sum(dict1, **dict2):
     ret = dict1.copy()
     ret.update(dict2)
     return ret
+
 
 def render(blog, theme, output):
     """

@@ -4,6 +4,7 @@ import attr
 
 from symplectic import posts
 
+
 class PostsTest(unittest.TestCase):
 
     def setUp(self):

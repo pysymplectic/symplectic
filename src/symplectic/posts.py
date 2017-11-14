@@ -6,6 +6,7 @@ import datetime
 
 import attr
 
+
 @attr.s(frozen=True)
 class Post(object):
     """
@@ -32,6 +33,7 @@ class Post(object):
         """
         return self.slug + '.html'
 
+
 @attr.s(frozen=True)
 class Page(object):
     """
@@ -51,6 +53,7 @@ class Page(object):
         """
         return self.slug + '.html'
 
+
 @attr.s(frozen=True)
 class Metadata(object):
     """
@@ -59,6 +62,7 @@ class Metadata(object):
     title = attr.ib()
     description = attr.ib()
     links = attr.ib(default=attr.Factory(list))
+
 
 @attr.s(frozen=True)
 class Blog(object):

@@ -1,4 +1,3 @@
-import glob
 import os
 import shutil
 import tempfile
@@ -13,6 +12,7 @@ from symplectic import posts
 
 NS = '{http://www.w3.org/1999/xhtml}'
 
+
 class RenderTest(unittest.TestCase):
 
     def setUp(self):
@@ -23,7 +23,8 @@ class RenderTest(unittest.TestCase):
                         )
         posts = []
         pages = []
-        self.blog = symplectic.Blog(metadata=metadata, posts=posts, pages=pages)
+        self.blog = symplectic.Blog(metadata=metadata,
+                                    posts=posts, pages=pages)
         self.addCleanup(lambda: shutil.rmtree(self.blogdir))
         self.blogdir = tempfile.mkdtemp()
         self.addCleanup(lambda: shutil.rmtree(self.themedir))
@@ -45,7 +46,9 @@ class RenderTest(unittest.TestCase):
           <h1><a tal:content="metadata.title" href="index.html">The Blog</a></h1>
           <p>My pages</p>
           <ul>
-          <li tal:repeat="page pages"><a href="#" tal:attributes="href page.rel_link" tal:content="page.title">About</a></li>
+          <li tal:repeat="page pages">
+          <a href="#" tal:attributes="href page.rel_link"
+                      tal:content="page.title">About</a></li>
           </ul>
           <p tal:content="metadata.description">A description</p>
           <div metal:define-slot="main">
@@ -53,11 +56,15 @@ class RenderTest(unittest.TestCase):
           </div>
           <h4>Archives</h4>
           <ol>
-          <li tal:repeat="archive archives"><a href="#" tal:attributes="href archive.link" tal:content="archive.name">March 2014</a></li>
+          <li tal:repeat="archive archives">
+           <a href="#" tal:attributes="href archive.link"
+                       tal:content="archive.name">March 2014</a></li>
           </ol>
           <h4>Elsewhere</h4>
           <ol>
-          <li tal:repeat="link metadata.links"><a href="#" tal:attributes="href link[1]" tal:content="link[0]">GitHub</a></li>
+          <li tal:repeat="link metadata.links">
+          <a href="#" tal:attributes="href link[1]"
+                      tal:content="link[0]">GitHub</a></li>
           </ol>
           </body></html>""")
 
@@ -73,15 +80,17 @@ class RenderTest(unittest.TestCase):
         archives, links = river_parsed.iter(NS + 'li')
         links, = links.iter(NS + 'a')
         self.assertEquals(links.text, self.blog.metadata.links[0][0])
-        self.assertEquals(links.attrib, dict(href=self.blog.metadata.links[0][1]))
+        self.assertEquals(links.attrib,
+                          dict(href=self.blog.metadata.links[0][1]))
         with open(os.path.join(self.blogdir, 'blog', 'list.html')) as fp:
             archives = fp.read()
-        archives_parsed = ET.fromstring(river)
+        archives_parsed = ET.fromstring(archives)
         title, = archives_parsed.iter(NS + 'title')
         self.assertEquals(title.text, self.blog.metadata.title)
 
     def test_one_post_render(self):
-        post = posts.Post(title='hey there', slug='foo', date='2017-11-13 22:23',
+        post = posts.Post(title='hey there', slug='foo',
+                          date='2017-11-13 22:23',
                           author='', contents='')
         blog = attr.evolve(self.blog, posts=[post])
         symplectic.render(blog,
