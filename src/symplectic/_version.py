@@ -7,5 +7,5 @@ Provides symplectic version information.
 
 from incremental import Version
 
-__version__ = Version('symplectic', 17, 10, 0)
+__version__ = Version('symplectic', 17, 11, 0)
 __all__ = ["__version__"]
