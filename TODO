@@ -1,2 +1,2 @@
-* Unit tests, documentation
+* "tox -e docs" to run
 * Generate proper links to older/newer
