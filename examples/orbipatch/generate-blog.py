@@ -1,5 +1,6 @@
 import glob
 import shutil
+import sys
 
 import symplectic
 from symplectic import jsonformat, rest
@@ -18,7 +19,6 @@ PAGES = jsonformat.pages_from_json_files(glob.glob('pages/*.json'))
 PAGES += rest.pages_from_rest_files(glob.glob('pages/*.rst'))
 BLOG = symplectic.Blog(metadata=METADATA, posts=POSTS, pages=PAGES)
 symplectic.render(BLOG,
-#                  theme='../../themes/bs4blog',
-                  theme=['../../themes/basic', '../../themes/bs4blog'],
+                  theme=[sys.argv[1]],
                   output='../../build/blog')
 shutil.copy('../../build/blog/river.html', '../../build/blog/index.html')

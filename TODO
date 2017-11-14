@@ -1,3 +1,2 @@
-* Package themes inside the package
-* Get to releasable state
+* "tox -e docs" to run
 * Generate proper links to older/newer
