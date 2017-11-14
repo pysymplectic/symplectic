@@ -1,3 +1,7 @@
+"""
+Rendering
+"""
+
 import functools
 import os
 import shutil
@@ -10,15 +14,25 @@ def _process(template, inputs, output_file):
     rendered = template(**inputs)
     if rendered.count('<!DOCTYPE html>') > 1:
         rendered = rendered.replace('<!DOCTYPE html>', '', 1)
-    with open(output_file, 'w') as fp:
-        fp.write(rendered)
+    with open(output_file, 'w') as filep:
+        filep.write(rendered)
 
-def _dict_sum(d1, **d2):
-    ret = d1.copy()
-    ret.update(d2)
+def _dict_sum(dict1, **dict2):
+    ret = dict1.copy()
+    ret.update(dict2)
     return ret
 
 def render(blog, theme, output):
+    """
+    Render a blog
+
+    Render a blog to the output directory.
+
+    Args:
+        blog (Blog): Blog to render
+        theme (list of str): List of theme directories
+        output (str): output directory
+    """
     theme[0:0] = [pkg_resources.resource_filename('symplectic', 'basic')]
     if not os.path.exists(output):
         os.makedirs(output)
