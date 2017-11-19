@@ -17,6 +17,7 @@ class Post(object):
     date = attr.ib()
     author = attr.ib()
     contents = attr.ib()
+    base = attr.ib()
 
     @property
     def formatted_date(self):
