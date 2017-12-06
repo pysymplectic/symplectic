@@ -3,13 +3,14 @@ import shutil
 import sys
 
 import symplectic
-from symplectic import jsonformat, rest
+from symplectic import jsonformat, rest, feed
 
 METADATA = symplectic.Metadata(
     title="Local Patches of an Orbifold Life",
     description="Some small, random musing about life in an interesting "
                 "place.",
     links=[("GitHub", "https://github.com/moshez")],
+    base='https://local.orbifold.xyz/'
 )
 
 POSTS = jsonformat.posts_from_json_files(glob.glob('*.json'))
@@ -22,3 +23,5 @@ symplectic.render(BLOG,
                   theme=[sys.argv[1]],
                   output='../../build/blog')
 shutil.copy('../../build/blog/river.html', '../../build/blog/index.html')
+with open('../../build/blog/atom.xml', 'w') as fp:
+    feed._generate_atom(BLOG, fp)

@@ -3,5 +3,5 @@
             "slug": "weather",
             "date": "2017-09-13 22:22",
             "author": "Moshe Zadka",
-            "contents": "<div>blah blah</div><div>blah blah blah</div>"
+            "contents": "<div><div>blah blah</div><div>blah blah blah</div></div>"
 }
