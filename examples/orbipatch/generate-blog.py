@@ -22,6 +22,5 @@ BLOG = symplectic.Blog(metadata=METADATA, posts=POSTS, pages=PAGES)
 symplectic.render(BLOG,
                   theme=[sys.argv[1]],
                   output='../../build/blog')
+symplectic.render_atom_feed(BLOG, output='../../build/blog')
 shutil.copy('../../build/blog/river.html', '../../build/blog/index.html')
-with open('../../build/blog/atom.xml', 'w') as fp:
-    feed._generate_atom(BLOG, fp)
