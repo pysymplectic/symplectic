@@ -61,7 +61,7 @@ class Metadata(object):
     """
     title = attr.ib()
     description = attr.ib()
-    base = attr.ib()
+    base = attr.ib(default="https://example.com")
     links = attr.ib(default=attr.Factory(list))
 
 
