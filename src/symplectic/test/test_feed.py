@@ -37,7 +37,7 @@ class FeedTest(unittest.TestCase):
         subtitle, = feed_parsed.iter(NS + 'subtitle')
         self.assertEquals(subtitle.text, 'Testing stuff')
         updated, = feed_parsed.iter(NS + 'updated')
-        self.assertEquals(updated.text[:2], '20') # Test will fail in 80 years
+        self.assertEquals(updated.text[:2], '20')  # Test will fail in 80 years
 
     def test_one_render(self):
         post = posts.Post(title='hey there', slug='foo',

@@ -1,3 +1,6 @@
+"""
+Generate ATOM feed
+"""
 import cgi
 import datetime
 import os
@@ -15,31 +18,46 @@ def _to_utc(pseudo_stamp):
     return ret
 
 
-def _generate_atom(blog, fp):
+def _generate_atom(blog, filep):
     root = ET.Element('feed',
                       xmlns="http://www.w3.org/2005/Atom")
     ET.SubElement(root, 'id').text = blog.metadata.base
     ET.SubElement(root, 'title').text = blog.metadata.title
     ET.SubElement(root, 'subtitle').text = blog.metadata.description
-    ET.SubElement(root, 'updated').text = _to_timestamp(datetime.datetime.utcnow())
+    now_stamp = _to_timestamp(datetime.datetime.utcnow())
+    ET.SubElement(root, 'updated').text = now_stamp
     ET.SubElement(root, 'link', rel='alternate', type='text/html',
-                                href=blog.metadata.base)
-    gen = ET.SubElement(root, 'generator', uri='http://github.com/pysymplectic')
+                  href=blog.metadata.base)
+    gen = ET.SubElement(root,
+                        'generator',
+                        uri='http://github.com/pysymplectic')
     gen.text = 'Symplectic'
     for post in blog.posts:
         entry = ET.SubElement(root, 'entry')
         abs_url = blog.metadata.base + '/' + post.rel_link
         ET.SubElement(entry, 'id').text = abs_url
-        ET.SubElement(ET.SubElement(entry, 'author'), 'name').text = post.author
+        name = ET.SubElement(ET.SubElement(entry, 'author'), 'name')
+        name.text = post.author
         ET.SubElement(entry, 'title').text = post.title
         ET.SubElement(entry, 'link', rel='alternate', type='text/html',
-                         href=abs_url)
-        ET.SubElement(entry, 'updated').text = _to_timestamp(_to_utc(post.date))
+                      href=abs_url)
+        post_timestamp = _to_timestamp(_to_utc(post.date))
+        ET.SubElement(entry, 'updated').text = post_timestamp
         content = '<div>{}</div>'.format(post.contents)
         ET.SubElement(entry, 'content', type='html').text = cgi.escape(content)
-    ET.ElementTree(root).write(fp)
+    ET.ElementTree(root).write(filep)
 
 
 def render_atom_feed(blog, output):
-    with open(os.path.join(output, 'atom.xml'), 'wb') as fp:
-        _generate_atom(blog, fp)
+    """
+    Render an ATOM feed into a directory.
+
+    Create a file called :code:`atom.xml` in the directory,
+    with an ATOM-formatted feed of the blog.
+
+    Arguments:
+        blog (Blog): The blog object
+        output (str): directory in which to create the file
+    """
+    with open(os.path.join(output, 'atom.xml'), 'wb') as filep:
+        _generate_atom(blog, filep)
